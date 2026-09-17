@@ -1,0 +1,41 @@
+{
+  "labs": [
+
+    {
+      "id": "chemical",
+
+      "title": "Chemistry Lab",
+
+      "experiments": [
+        {
+          "id": "determination-of-percentage-of-copper-in-brass-using-standard-sodium-thiosulfate-solution",
+
+          "title": "DETERMINATION OF PERCENTAGE OF COPPER IN BRASS USING STANDARD SODIUM THIOSULFATE SOLUTION",
+
+          "path": "./chemistry-lab/Determination-of-percentage-of-copper-in-brass-using-standard-sodium-thiosulfate-solution"
+        }
+
+        
+      ]
+    },
+
+    {
+      "id": "fluid",
+
+      "title": "Fluid Mechanics Lab",
+
+      "experiments": [
+
+        {
+          "id": "bernoulli",
+
+          "title": "Bernoulli Experiment",
+
+          "path": "./labs/fluid/bernoulli/"
+        }
+
+      ]
+    }
+
+  ]
+}

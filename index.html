@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Lab Review Dashboard</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
+<script src="https://cdn.jsdelivr.net/npm/markdown-it/dist/markdown-it.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/markdown-it-texmath/texmath.min.js"></script>
+<script defer src="./script.js"></script>
+</head>
+<body>
+<header><div class="lab-header">
+
+  <div class="lab-title">
+    🧪 Chemistry Lab - Phase IV
+  </div>
+
+  <div class="header-actions">
+
+    <button class="icon-btn" title="Guidelines"
+            onclick="openModal('guidelines')">
+
+      📘
+
+    </button>
+
+    <button class="icon-btn" title="Contributors"
+            onclick="openModal('developers')">
+
+      👨‍💻
+
+    </button>
+
+  </div>
+
+</div></header>
+<!-- TABS -->
+
+<!-- MOBILE TOPBAR -->
+
+<div class="mobile-topbar">
+
+  <button class="menu-btn" onclick="toggleMenu()">
+    &#9776;
+  </button>
+
+  <h2 class="mobile-title">
+    Review Dashboard
+  </h2>
+
+</div>
+
+<div class="experiment-list" id="experimentList">
+  
+  </div>
+
+<div class="tabs" id="tabsMenu">
+
+  <div class="tab active" onclick="switchTab(event, 'aim.md')">
+    Aim
+  </div>
+
+  <div class="tab" onclick="switchTab(event, 'theory.md')">
+    Theory
+  </div>
+
+  <div class="tab" onclick="switchTab(event, 'pretest.json')">
+    Pretest
+  </div>
+
+  <div class="tab" onclick="switchTab(event, './procedure/procedure.md')">
+    Procedure
+  </div>
+
+  <div class="tab" onclick="switchTab(event, 'simulation/index.html')">
+    Simulation
+  </div>
+
+  <div class="tab" onclick="switchTab(event, 'posttest.json')">
+    Posttest
+  </div>
+
+  <div class="tab" onclick="switchTab(event, 'references.md')">
+    References
+  </div>
+
+  <div class="tab" onclick="switchTab(event, 'contributors.md')">
+    Contributors
+  </div>
+
+</div>
+
+<div class="container">
+  <!-- Experiment List  -->
+  
+  <!-- Preview -->
+  <div class="preview">
+    <h3 class="preview-title">DETERMINATION OF PERCENTAGE OF COPPER IN BRASS USING STANDARD SODIUM THIOSULFATE SOLUTION</h3>
+    <div id="preview">Loading...</div>
+  </div>
+
+  <!-- Comments -->
+  <!-- <div class="comments">
+    <h3>💬 Reviewer Comments</h3>
+    <div id="commentList"></div>
+
+    <textarea id="commentInput" placeholder="Add comment..."></textarea>
+    <button onclick="addComment()">Add Comment</button>
+  </div> -->
+
+</div>
+
+
+<!-- MODAL -->
+
+<div class="modal-overlay"
+     id="modalOverlay">
+
+  <div class="modal-box">
+
+    <div class="modal-top">
+
+      <h2 id="modalTitle">
+        Modal Title
+      </h2>
+
+      <button class="close-btn"
+              onclick="closeModal()">
+
+        ✖
+
+      </button>
+
+    </div>
+
+    <div class="modal-content"
+         id="modalContent">
+
+    </div>
+
+  </div>
+
+</div>
+</body>
+</html>

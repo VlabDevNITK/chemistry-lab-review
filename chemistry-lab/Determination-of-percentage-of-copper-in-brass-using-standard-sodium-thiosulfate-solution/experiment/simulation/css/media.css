@@ -1,0 +1,152 @@
+@media (max-width: 1550px) {
+ 
+.main{
+  grid-template-columns:70% 30%;
+  padding: 0 0.25rem;
+}
+/* Hide menus by default (desktop) */
+.footer-menus {
+  background: none;
+  display: none;
+}
+
+.table{
+    margin-right: 0.5rem;
+}
+
+
+}
+@media (max-width: 980px) {
+  .logo{
+    width: 5.8rem;
+    height: 5.8rem;
+  }
+  .title h1{
+    font-size: 2.0rem;
+  }
+ 
+  .section-title{
+    font-size:1.6rem;
+  }
+  .footer {
+    padding: 0;
+  }
+
+  .footer-menus {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: 100%;
+    border: none;
+    box-shadow: 0 -0.25rem 0.5rem rgba(0, 0, 0, 0.15);
+    /* border: 0.15rem solid var(--clr-title-background3); */
+    background: var(--clr-body-clr);
+  }
+
+  .footer-menus button {
+    flex: 1;
+    background: none;
+    border: none;
+    padding: 0.6rem 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 0.7rem;
+
+  }
+
+  .footer-menus i {
+    font-size: 1.2rem;
+    margin-bottom: 0.2rem;
+  }
+
+  /* .footer-menus button:active {
+    background: rgba(255, 255, 255, 0.05);
+  } */
+
+  .footer-copy {
+    font-size: 0.75rem;
+/*     padding: 0.3rem 0; */
+    width: 100%;
+    grid-column: span 2;
+    text-align: center;
+  }
+  .main{
+    grid-template-columns:1fr;
+    /* padding-right: 0.15rem; */
+  }
+  .simulation{
+    grid-row: 1/2;
+    grid-column:1/-1;
+  }
+  .table{
+    grid-row:2/3;
+    grid-column:1/-1;
+    margin-right: 0;
+
+  }
+  /* .result{
+    grid-row:2/3;
+    grid-column:2/3;
+  } */
+  .var-controls{
+    grid-row:2/3;
+    grid-column:1/-1;
+    /* margin: 0; */
+  }
+  .variables{
+    padding: 0;
+    /* padding-bottom:5rem; */
+    grid-column: 1/-1;
+    width: 100%;
+    /* margin-bottom: 10rem; */
+    /* margin: 0 0.15rem; */
+  }
+  .controls{
+    display:none;
+    padding: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .logo{
+    width: 4.8rem;
+    height: 4.8rem;
+  }
+  .title h1{
+    font-size: 1.6rem;
+  }
+  .section-title{
+    font-size:1.4rem;
+    padding: 0.3rem;
+  }
+  .simulation-main{
+    grid-template-columns:1fr;
+  }
+  .simulation{
+    grid-row: 1/2;
+    grid-column:1/-1;
+  }
+
+  .table{
+    margin-right: 0;
+    margin-bottom: 10rem;
+}
+
+  .footer { 
+   position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  color: var(--clr-side-background4);
+  text-align: center;
+  padding: 0 0.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 150;
+  /* border-radius: 0.25rem; */
+}
+
+  
+}
