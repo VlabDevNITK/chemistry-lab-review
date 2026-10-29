@@ -8,9 +8,9 @@
 
       "experiments": [
         {
-          "id": "determination-of-percentage-of-copper-in-brass-using-standard-sodium-thiosulfate-solution",
+          "id": "determination-of-hardness-of-water-using-edta-titration",
 
-          "title": "DETERMINATION OF PERCENTAGE OF COPPER IN BRASS USING STANDARD SODIUM THIOSULFATE SOLUTION",
+          "title": "Determination of Hardness of Water Using EDTA Titration",
 
           "path": "./chemistry-lab/Determination-of-percentage-of-copper-in-brass-using-standard-sodium-thiosulfate-solution"
         }
