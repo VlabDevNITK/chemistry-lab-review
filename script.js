@@ -448,8 +448,7 @@ async function loadExperiments() {
               ".preview-title"
             )
             .innerText =
-            exp.title || "Determination of Hardness of Water Using EDTA Titration"
-";
+            exp.title || "Determination of Hardness of Water Using EDTA Titration";
         }
       );
 
