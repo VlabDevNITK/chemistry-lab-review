@@ -1,182 +1,144 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Percentage of Copper in Brass Estimation - Virtual Labs</title>
+  <title>SOLVE - Determination of Hardness of Water Using EDTA Titration</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
     href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap"
-    rel="stylesheet" />
-  <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" />
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css"/>
   <link rel="stylesheet" href="./css/general.css" />
   <link rel="stylesheet" href="./css/style.css" />
   <link rel="stylesheet" href="./css/media.css" />
-
+  <link rel="stylesheet" href="./css/simulation.css" />
   <script defer src="https://code.jquery.com/jquery-3.6.0.js"></script>
   <script defer src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-  <script defer type="text/javascript"
-    src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
-
-  <!-- Three.js and Animation Libraries -->
-  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
-  <script defer src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/18.6.4/tween.umd.js"></script>
-
-  <!-- Custom scripts -->
-  <script defer src="js/models_data.js"></script>
-  <script defer src="js/script.js"></script>
-  <script defer src="js/MOMscript.js"></script>
-
-  <!-- MathJax Configuration and Script -->
-  <script>
-    window.MathJax = {
-      tex: {
-        inlineMath: [['$', '$'], ['\\(', '\\)']]
-      },
-      svg: {
-        fontCache: 'global'
-      }
-    };
-  </script>
-  <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
-  </script>
+  <script defer type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script defer src="./js/experiment-bundle.js"></script>
 </head>
-
-<body onload="startsim();varinit();">
+<body>
   <div class="container">
-    <div class="title">
-      <img src="./images/logo_nitk.png" alt="logo" class="logo" />
-      <h1>Percentage of Copper in Brass Estimation</h1>
-    </div>
-
-    <div class="main">
-      <div class="simulation-main">
-        <div class="simulation">
+  <div class="title">
+    <img src="./images/logo_nitk.png" alt="logo" class="logo"/>
+    <h1>Determination of Hardness of Water Using EDTA Titration</h1>
+  </div>
+  <div class="main">
+    <div class="simulation-main">
+        <div class="simulation">                      
           <h3 class="section-title">Simulation</h3>
           <div class="task-section--simulation">
-            <div class="section-canvas" style="position: relative;">
-              <canvas id="simscreen" height="350px" width="550px"></canvas>
-              <div id="loading_screen"
-                style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.95); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 999; font-family: 'Poppins', sans-serif; transition: opacity 0.4s ease; border-radius: 8px;">
-                <div class="loader-spinner" style="border: 4px solid #f3f3f3; border-top: 4px solid #089B93; border-radius: 50%; width: 40px; height: 40px; animation: loading-spin 1s linear infinite; box-sizing: border-box;"></div>
-                <p style="margin-top: 15px; color: #089B93; font-weight: 600; font-size: 0.95em;">Loading 3D Laboratory Models...</p>
-                <p id="loading_percentage" style="margin-top: 4px; color: #666; font-size: 0.85em; font-weight: 500;">0% loaded</p>
-                <style>
-                  @keyframes loading-spin {
-                    0% { transform: rotate(0deg); }
-                    100% { transform: rotate(360deg); }
-                  }
-                </style>
-              </div>
-              <div id="simulation_alert"
-                style="display: none; position: absolute; top: 15px; left: 15px; right: 15px; background-color: rgba(255, 221, 225, 0.95); border: 1.5px solid #ff4d6d; color: #c9184a; padding: 12px; border-radius: 8px; font-size: 0.9em; text-align: center; font-weight: 500; z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.15); transition: opacity 0.3s ease;">
-              </div>
+            <div class="section-canvas">
+                <div id="simscreen-container" class="simscreen-wrapper">
+                  <!-- Step Guidance Bar -->
+                  <div id="simStepBar" class="sim-step-bar">
+                    <div class="sim-step-header">
+                      <span id="simPhaseBadge" class="sim-phase-badge">Phase 1: Standardization</span>
+                      <span id="simStepBadge" class="sim-step-badge">Step 1 of 8</span>
+                    </div>
+                    <p id="simStepInstruction" class="sim-step-instruction">
+                      Step 1: Fill the burette with EDTA solution using the funnel up to the 0.00 mL mark.
+                    </p>
+                    <div id="simStepFeedback" class="sim-step-feedback"></div>
+                  </div>
+
+                  <!-- Meniscus Magnifier -->
+                  <div class="meniscus-magnifier" title="Eye-Level Burette Meniscus View">
+                    <div class="meniscus-magnifier-title">Burette Meniscus</div>
+                    <div class="meniscus-canvas-box">
+                      <canvas id="meniscusCanvas" width="120" height="75"></canvas>
+                    </div>
+                    <div id="meniscusReadingLabel" class="meniscus-reading-label">0.00 mL</div>
+                  </div>
+
+                  <!-- Live HUD -->
+                  <div class="sim-hud">
+                    <div class="sim-hud-card">
+                      <div class="sim-hud-title">Burette</div>
+                      <div id="hudBuretteReading" class="sim-hud-value">0.00 mL</div>
+                    </div>
+                    <div class="sim-hud-card">
+                      <div class="sim-hud-title">Titre</div>
+                      <div id="hudTitreVolume" class="sim-hud-value">0.00 mL</div>
+                    </div>
+                    <div class="sim-hud-card">
+                      <div class="sim-hud-title">Stopcock</div>
+                      <span id="hudStopcockBadge" class="stopcock-status-badge closed">CLOSED</span>
+                    </div>
+                    <div class="sim-hud-card">
+                      <div class="sim-hud-title">Color</div>
+                      <div id="hudColorBadge" class="sim-hud-value" style="font-size: 1.1rem;">Clear</div>
+                    </div>
+                  </div>
+                </div>
             </div>
           </div>
         </div>
-
+        
         <div class="var-controls">
           <div class="variables">
             <h3 class="section-title">variables</h3>
             <div class="task-section--variables">
-              <!-- Brass sample weight (g) -->
+              <!-- Water Sample Preset -->
               <div class="var-div">
-                <div class="input-container">
-                  <label for="weight_spinner">
-                    <p title="Brass sample weight">Brass weight</p>
-                  </label>
-                  <input class="var-spinner" id="weight_spinner" type="number" name="value" />
-                  <span>g</span>
+                <div class="input-container" style="grid-template-columns: 1fr;">
+                  <label for="varSamplePreset"><p title="Water Sample Preset">Water Sample Preset</p></label>
+                  <select id="varSamplePreset" class="ui-selectmenu-button" style="width: 100%; padding: 0.35rem 0.5rem; border: 1px solid #417472; border-radius: 4px; font-size: 1.2rem; font-family: inherit;">
+                    <option value="75">Sample A (Soft ~75 ppm)</option>
+                    <option value="160">Sample B (Moderate ~160 ppm)</option>
+                    <option value="240" selected>Sample C (Hard Tap ~240 ppm)</option>
+                    <option value="450">Sample D (Borewell ~450 ppm)</option>
+                  </select>
                 </div>
-                <div class="var-slider" id="weight_slider"></div>
               </div>
 
-              <!-- Nitric acid volume (mL) -->
+              <!-- EDTA Salt Mass transferred -->
               <div class="var-div">
                 <div class="input-container">
-                  <label for="hno3_spinner">
-                    <p title="Nitric acid volume">HNO₃ vol</p>
-                  </label>
-                  <input class="var-spinner" id="hno3_spinner" type="number" name="value" />
-                  <span>mL</span>
+                  <label for="varEdtaMass"><p title="Mass of EDTA salt transferred (W = W1 - W2)">EDTA Mass (W)</p></label>
+                  <input class="var-spinner" id="varEdtaMass" type="number" name="value" value="0.930" min="0.800" max="1.100" step="0.005" />
+                  <span id="varEdtaMassVal">g</span>
                 </div>
-                <div class="var-slider" id="hno3_slider"></div>
               </div>
 
-              <!-- Urea amount (g) -->
+              <!-- Volumetric Flask Volume -->
               <div class="var-div">
                 <div class="input-container">
-                  <label for="urea_spinner">
-                    <p title="Urea amount">Urea wt</p>
-                  </label>
-                  <input class="var-spinner" id="urea_spinner" type="number" name="value" />
-                  <span>g</span>
+                  <label for="varFlaskVolume"><p title="Volumetric Flask Capacity">Flask Vol</p></label>
+                  <input class="var-spinner" id="varFlaskVolume" type="number" name="value" value="250" readonly disabled style="background:#f1f5f9; color:#475569;" />
+                  <span id="varFlaskVolumeVal">mL</span>
                 </div>
-                <div class="var-slider" id="urea_slider"></div>
               </div>
 
-              <!-- NH4OH volume (mL) -->
+              <!-- Water Sample Volume -->
               <div class="var-div">
                 <div class="input-container">
-                  <label for="nh4oh_spinner">
-                    <p title="NH4OH volume">NH₄OH vol</p>
-                  </label>
-                  <input class="var-spinner" id="nh4oh_spinner" type="number" name="value" />
-                  <span>mL</span>
+                  <label for="varSampleVolume"><p title="Pipetted Water Sample Volume (Professor Manual)">Sample Vol</p></label>
+                  <input class="var-spinner" id="varSampleVolume" type="number" name="value" value="25" min="25" max="25" step="0" readonly disabled style="background:#f1f5f9; color:#475569;" />
+                  <span id="varSampleVolumeVal">mL</span>
                 </div>
-                <div class="var-slider" id="nh4oh_slider"></div>
               </div>
 
-              <!-- Acetic acid volume (mL) -->
+              <!-- Ammonia Buffer Volume -->
               <div class="var-div">
                 <div class="input-container">
-                  <label for="acetic_spinner">
-                    <p title="Acetic acid volume">CH₃COOH vol</p>
-                  </label>
-                  <input class="var-spinner" id="acetic_spinner" type="number" name="value" />
-                  <span>mL</span>
+                  <label for="varBufferVolume"><p title="NH3-NH4Cl Buffer Volume (pH 10)">Buffer (pH 10)</p></label>
+                  <input class="var-spinner" id="varBufferVolume" type="number" name="value" value="3.0" min="2.0" max="5.0" step="0.5" />
+                  <span id="varBufferVolumeVal">mL</span>
                 </div>
-                <div class="var-slider" id="acetic_slider"></div>
               </div>
 
-              <!-- KI volume (mL) -->
+              <!-- Titration Flow Rate -->
               <div class="var-div">
                 <div class="input-container">
-                  <label for="ki_spinner">
-                    <p title="Potassium Iodide volume">KI vol</p>
-                  </label>
-                  <input class="var-spinner" id="ki_spinner" type="number" name="value" />
-                  <span>mL</span>
+                  <label for="varFlowRate"><p title="Titration Speed">Flow Rate</p></label>
+                  <input class="var-spinner" id="varFlowRate" type="number" name="value" value="0.6" min="0.1" max="1.5" step="0.1" />
+                  <span id="varFlowRateVal">mL/s</span>
                 </div>
-                <div class="var-slider" id="ki_slider"></div>
-              </div>
-
-              <!-- Starch volume (mL) -->
-              <div class="var-div">
-                <div class="input-container">
-                  <label for="starch_spinner">
-                    <p title="Starch volume">Starch vol</p>
-                  </label>
-                  <input class="var-spinner" id="starch_spinner" type="number" name="value" />
-                  <span>mL</span>
-                </div>
-                <div class="var-slider" id="starch_slider"></div>
-              </div>
-
-              <!-- Na2S2O3 volume (mL) -->
-              <div class="var-div">
-                <div class="input-container">
-                  <label for="thiosulfate_spinner">
-                    <p title="Sodium Thiosulfate volume">Na₂S₂O₃ vol</p>
-                  </label>
-                  <input class="var-spinner" id="thiosulfate_spinner" type="number" name="value" />
-                  <span>mL</span>
-                </div>
-                <div class="var-slider" id="thiosulfate_slider"></div>
               </div>
             </div>
           </div>
@@ -184,413 +146,170 @@
           <div class="controls">
             <h3 class="section-title">controls</h3>
             <div class="desktop-controls">
-              <!-- START -->
-              <button class="ctrl-btn start-btn" onclick="startSim()">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#089B93" stroke="#ffffff"
-                  class="icon">
-                  <path fill-rule="evenodd"
-                    d="M4.5 5.653c0-1.427 1.529-2.33 2.779-1.643l11.54 6.347c1.295.712 1.295 2.573 0 3.286L7.28 19.99c-1.25.687-2.779-.217-2.779-1.643V5.653Z"
-                    clip-rule="evenodd" />
-                </svg>
-                <span>Start Trial 1</span>
+              <!-- Phase Switch -->
+              <button id="btnSwitchPhase" class="ctrl-btn" style="background: #0f766e; color: #ffffff; font-size: 1.15rem; margin-bottom: 0.4rem;">
+                Proceed to Phase 2 (Water Hardness) ➜
               </button>
 
-              <!-- RESET -->
-              <button class="ctrl-btn reset-btn" onclick="resetSim()">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#089B93" class="icon"
-                  stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round"
-                    d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
-                </svg>
-                <span>Reset</span>
-              </button>
-
-              <!-- PREVIOUS STEP -->
-              <button class="ctrl-btn prev-btn" onclick="prevStep()">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#089B93" class="icon"
-                  stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
-                </svg>
-                <span>Prev Step</span>
-              </button>
-
-              <!-- NEXT STEP -->
-              <button class="ctrl-btn next-btn" onclick="nextStep()">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#089B93" class="icon"
-                  stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-                </svg>
-                <span>Next Step</span>
-              </button>
-
-              <!-- PAUSE -->
-              <button class="ctrl-btn pause-btn" onclick="pauseSim()">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#089B93" stroke="#ffffff"
-                  class="icon">
-                  <path fill-rule="evenodd"
-                    d="M6.75 5.25a.75.75 0 0 1 .75-.75H9a.75.75 0 0 1 .75.75v13.5a.75.75 0 0 1-.75.75H7.5a.75.75 0 0 1-.75-.75V5.25Zm7.5 0A.75.75 0 0 1 15 4.5h1.5a.75.75 0 0 1 .75.75v13.5a.75.75 0 0 1-.75.75H15a.75.75 0 0 1-.75-.75V5.25Z"
-                    clip-rule="evenodd" />
-                </svg>
-                <span>Pause</span>
-              </button>
-
-              <!-- PLAY -->
-              <button class="ctrl-btn play-btn" onclick="playSim()">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#089B93" stroke="#ffffff"
-                  class="icon">
-                  <path fill-rule="evenodd"
-                    d="M4.5 5.653c0-1.427 1.529-2.33 2.779-1.643l11.54 6.347c1.295.712 1.295 2.573 0 3.286L7.28 19.99c-1.25.687-2.779-.217-2.779-1.643V5.653Z"
-                    clip-rule="evenodd" />
-                </svg>
-                <span>Play</span>
-              </button>
-
-              <!-- ROTATE -->
-              <button class="ctrl-btn rotate-btn" onclick="toggleRotate()">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#089B93" class="icon"
-                  stroke-width="2">
-                  <path stroke-linecap="round" stroke-linejoin="round"
-                    d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7" />
-                </svg>
-                <span>Rotate</span>
-              </button>
+              <div class="controls-actions-grid" id="controlsActionsGrid">
+                <!-- Buttons dynamically labeled and managed in experiment-bundle.js -->
+                <button id="btnAction1" class="ctrl-btn active-action" title="Step 1 Action">
+                  <span id="btnAction1Label">1. Weigh Bottle + Salt</span>
+                </button>
+                <button id="btnAction2" class="ctrl-btn" disabled title="Step 2 Action">
+                  <span id="btnAction2Label">2. Transfer to Flask</span>
+                </button>
+                <button id="btnAction3" class="ctrl-btn" disabled title="Step 3 Action">
+                  <span id="btnAction3Label">3. Reweigh Empty Bottle</span>
+                </button>
+                <button id="btnAction4" class="ctrl-btn" disabled title="Step 4 Action">
+                  <span id="btnAction4Label">4. Wash Funnel (Water)</span>
+                </button>
+                <button id="btnAction5" class="ctrl-btn" disabled title="Step 5 Action">
+                  <span id="btnAction5Label">5. Swirl to Dissolve</span>
+                </button>
+                <button id="btnAction6" class="ctrl-btn" disabled title="Step 6 Action">
+                  <span id="btnAction6Label">6. Make Up to 250 mL</span>
+                </button>
+                <button id="btnAction7" class="ctrl-btn" disabled title="Step 7 Action">
+                  <span id="btnAction7Label">7. Stopper & Mix</span>
+                </button>
+                <button id="btnAction8" class="ctrl-btn" disabled title="Step 8 Action">
+                  <span id="btnAction8Label">8. Calculate Molarity</span>
+                </button>
+                <button id="btnNextTrial" class="ctrl-btn controls-full-btn" disabled title="Start Next Trial" style="display: none;">
+                  <span>🔁 Start Next Trial</span>
+                </button>
+                <button id="btnResetTrial" class="ctrl-btn controls-full-btn" style="border-color: #cbd5e1; color: #64748b;" title="Reset Current Step/Trial">
+                  <span>↺ Reset Step</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+    </div>
 
-      <div class="table">
-        <h3 class="section-title">Results</h3>
-        <div class="results-section">
-          <div class="task-section data-table task-section--table" id="datatable1">
-            <table class="task-table" style="width: 100%;">
-              <tbody>
-                <tr>
-                  <td>Current step</td>
-                  <td id="res_step">Step 1</td>
-                  <td>/ 20</td>
-                </tr>
-                <tr>
-                  <td>Reaction status</td>
-                  <td id="res_status">Ready</td>
-                </tr>
-                <tr>
-                  <td>Burette reading</td>
-                  <td id="res_burette">0.00</td>
-                  <td>mL</td>
-                </tr>
-                <tr>
-                  <td>Concordant reading</td>
-                  <td id="res_concordant">-</td>
-                  <td>mL</td>
-                </tr>
-                <tr>
-                  <td>Copper concentration</td>
-                  <td id="res_concentration">-</td>
-                  <td>g/L</td>
-                </tr>
-                <tr>
-                  <td>Percentage of copper</td>
-                  <td id="res_percentage">-</td>
-                  <td>%</td>
-                </tr>
-                <tr>
-                  <td>Endpoint status</td>
-                  <td id="res_endpoint">Not reached</td>
-                </tr>
-              </tbody>
-            </table>
-
-            <h4
-              style="margin-top: 20px; margin-bottom: 5px; color: #089B93; font-weight: 600; text-transform: uppercase; font-size: 0.9em; letter-spacing: 0.5px;">
-              Observation Table</h4>
-            <table class="obs-table" id="observation_table">
-              <thead>
-                <tr style="background-color: #e0f2f1;">
-                  <th style="padding: 5px; text-align: left;">Trial</th>
-                  <th style="padding: 5px; text-align: right;">Initial (mL)</th>
-                  <th style="padding: 5px; text-align: right;">Final (mL)</th>
-                  <th style="padding: 5px; text-align: right;">Consumed (mL)</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr id="obs_trial_1">
-                  <td style="padding: 5px;">Trial I</td>
-                  <td id="trial_1_init" style="padding: 5px; text-align: right;">-</td>
-                  <td id="trial_1_final" style="padding: 5px; text-align: right;">-</td>
-                  <td id="trial_1_diff" style="padding: 5px; text-align: right;">-</td>
-                </tr>
-                <tr id="obs_trial_2">
-                  <td style="padding: 5px;">Trial II</td>
-                  <td id="trial_2_init" style="padding: 5px; text-align: right;">-</td>
-                  <td id="trial_2_final" style="padding: 5px; text-align: right;">-</td>
-                  <td id="trial_2_diff" style="padding: 5px; text-align: right;">-</td>
-                </tr>
-                <tr id="obs_trial_3">
-                  <td style="padding: 5px;">Trial III</td>
-                  <td id="trial_3_init" style="padding: 5px; text-align: right;">-</td>
-                  <td id="trial_3_final" style="padding: 5px; text-align: right;">-</td>
-                  <td id="trial_3_diff" style="padding: 5px; text-align: right;">-</td>
-                </tr>
-              </tbody>
-            </table>
-
-            <h4
-              style="margin-top: 25px; margin-bottom: 5px; color: #089B93; font-weight: 600; text-transform: uppercase; font-size: 0.9em; letter-spacing: 0.5px;">
-              Chemical Calculations</h4>
-            <div
-              style="font-size: 0.85em; text-align: left; padding: 12px; background: #fafafa; border: 1px solid #e0e0e0; border-radius: 5px; line-height: 1.5; color: #333; overflow-x: auto;"
-              id="calculation_steps">
-              <em>Complete a titration trial to see intermediate chemical calculations.</em>
-            </div>
-
-            <!-- BUTTON FOR TRIAL RESET / NEW TRIAL -->
-            <button class="ctrl-btn next-trial-btn" id="btn_new_trial" onclick="startNewTrial()"
-              style="display: none; margin-top: 15px; width: 100%; justify-content: center; background-color: #089B93; color: white; padding: 10px; border-radius: 5px; font-weight: 600; cursor: pointer; border: none; align-items: center; gap: 8px;">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5"
-                stroke="currentColor" style="width: 18px; height: 18px;">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-              </svg>
-              <span>Start Next Trial (Phase B)</span>
-            </button>
+    <div class="table">
+          <h3 class="section-title">Results</h3>
+          <div class="results-tab-bar">
+            <button type="button" id="tabBtnPhase1" class="results-tab-btn active" onclick="switchResultsTab('phase1')">Phase 1: EDTA Prep</button>
+            <button type="button" id="tabBtnPhase2" class="results-tab-btn" onclick="switchResultsTab('phase2')">Phase 2: Total Hardness</button>
+            <button type="button" id="tabBtnAll" class="results-tab-btn" onclick="switchResultsTab('all')">All Results</button>
           </div>
-          <div class="task-section task-section--results" style="display:none;"></div>
-        </div>
-      </div>
-    </div>
+          <div class="results-section">
+            <div class="task-section data-table task-section--table" id="datatable1">
+              <div id="obsTablePhase1" style="width: 100%;"></div>
+              <div id="obsTablePhase2" style="width: 100%; display: none;"></div>
+            </div>
+            <div class="task-section task-section--results">
+              <!-- Phase 1 Calculation Card -->
+              <div class="calc-card" id="calcCardPhase1">
+                <div class="calc-title">Phase 1: Preparation of Standard EDTA Solution</div>
+                <div class="calc-formula-box">
+                  Weight of EDTA transferred (W) = W₁ - W₂<br>
+                  Molarity of EDTA = (W × 4) / 372.24
+                </div>
+                <div class="calc-input-group">
+                  <label for="inputFactorCheck" style="font-size: 1rem;">EDTA Molarity (M):</label>
+                  <input type="number" step="0.0001" id="inputFactorCheck" class="calc-input" placeholder="e.g. 0.0100" />
+                  <button type="button" id="btnCheckFactor" class="btn-calc-check">Check</button>
+                  <button type="button" id="btnStepsFactor" class="btn-calc-steps">Steps</button>
+                </div>
+                <div id="stepsFactorContent" class="calc-steps-content"></div>
+              </div>
 
-    <footer class="footer">
-      <div class="footer-menus">
-        <button class="ctrl-btn sim-btn" onclick="scrollToSimulation()">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="#089B93" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff"
-            class="icon">
-            <path stroke-linecap="round" stroke-linejoin="round"
-              d="M3 8.25V18a2.25 2.25 0 002.25 2.25h13.5A2.25 2.25 0 0021 18V8.25m-18 0V6a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 6v2.25m-18 0h18M5.25 6h.008v.008H5.25V6zM7.5 6h.008v.008H7.5V6zm2.25 0h.008v.008H9.75V6z" />
-          </svg>
-          <span>Simulation</span>
-        </button>
-        <button class="ctrl-btn result-btn" onclick="scrollToTable()">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#ffffff" stroke="#089B93" class="icon"
-            stroke-width="1">
-            <path fill-rule="evenodd"
-              d="M2.625 6.75a1.125 1.125 0 1 1 2.25 0 1.125 1.125 0 0 1-2.25 0Zm4.875 0A.75.75 0 0 1 8.25 6h12a.75.75 0 0 1 0 1.5h-12a.75.75 0 0 1-.75-.75ZM2.625 12a1.125 1.125 0 1 1 2.25 0 1.125 1.125 0 0 1-2.25 0ZM7.5 12a.75.75 0 0 1 .75-.75h12a.75.75 0 0 1 0 1.5h-12A.75.75 0 0 1 7.5 12Zm-4.875 5.25a1.125 1.125 0 1 1 2.25 0 1.125 1.125 0 0 1-2.25 0Zm4.875 0a.75.75 0 0 1 .75-.75h12a.75.75 0 0 1 0 1.5h-12a.75.75 0 0 1-.75-.75Z"
-              clip-rule="evenodd" />
-          </svg>
-          <span>Result</span>
-        </button>
-        <button class="ctrl-btn variables-btn" onclick="scrollToVariables()">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#ffffff" stroke="#089B93" class="icon"
-            stroke-width="1">
-            <path fill-rule="evenodd"
-              d="M19.253 2.292a.75.75 0 0 1 .955.461A28.123 28.123 0 0 1 21.75 12c0 3.266-.547 6.388-1.542 9.247a.75.75 0 1 1-1.416-.494c.94-2.7 1.458-5.654 1.458-8.753s-.519-6.054-1.458-8.754a.75.75 0 0 1 .461-.954Zm-14.227.013a.75.75 0 0 1 .414.976A23.183 23.183 0 0 0 3.75 12c0 3.085.6 6.027 1.69 8.718a.75.75 0 0 1-1.39.563c-1.161-2.867-1.8-6-1.8-9.281 0-3.28.639-6.414 1.8-9.281a.75.75 0 0 1 .976-.414Zm4.275 5.052a1.5 1.5 0 0 1 2.21.803l.716 2.148L13.6 8.246a2.438 2.438 0 0 1 2.978-.892l.213.09a.75.75 0 1 1-.584 1.381l-.214-.09a.937.937 0 0 0-1.145.343l-2.021 3.033 1.084 3.255 1.445-.89a.75.75 0 1 1 .786 1.278l-1.444.889a1.5 1.5 0 0 1-2.21-.803l-.716-2.148-1.374 2.062a2.437 2.437 0 0 1-2.978.892l-.213-.09a.75.75 0 0 1 .584-1.381l.214.09a.938.938 0 0 0 1.145-.344l2.021-3.032-1.084-3.255-1.445.89a.75.75 0 1 1-.786-1.278l1.444-.89Z"
-              clip-rule="evenodd" />
-          </svg>
-          <span>Variables</span>
-        </button>
-        <button class="ctrl-btn controls-btn" onclick="toggleMobileDrawer()">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#089B93" class="icon"
-            stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round"
-              d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
-          </svg>
-          <span>Controls</span>
-        </button>
-      </div>
-      <p class="footer-copy">© Copyright @ SOLVE - NITK</p>
-    </footer>
+              <!-- Phase 2 Calculation Card -->
+              <div class="calc-card" id="calcCardPhase2" style="display: none;">
+                <div class="calc-title">Phase 2: Determination of Total Hardness</div>
+                <div class="calc-formula-box">
+                  (MV)Hard Water = (MV)EDTA<br>
+                  MHard Water = (M × V)EDTA / 25.0<br>
+                  Total Hardness = MHard Water × 100.087 × 1000 ppm CaCO₃
+                </div>
+                <div class="calc-input-group">
+                  <label for="inputHardnessCheck" style="font-size: 1rem;">Total Hardness (ppm CaCO₃):</label>
+                  <input type="number" step="0.1" id="inputHardnessCheck" class="calc-input" placeholder="e.g. 240.0" />
+                  <button type="button" id="btnCheckHardness" class="btn-calc-check">Check</button>
+                  <button type="button" id="btnStepsHardness" class="btn-calc-steps">Steps</button>
+                </div>
+                <div id="stepsHardnessContent" class="calc-steps-content"></div>
+              </div>
+
+              <!-- Results Summary -->
+              <div class="results-summary-box">
+                <div><strong>EDTA Molarity: </strong><span id="resEdtaFactor">--</span></div>
+                <div><strong>Concordant Titre: </strong><span id="resConcordantTitre">--</span></div>
+                <div><strong>Total Hardness: </strong><span id="resTotalHardness" class="res-val-highlight">--</span></div>
+                <div style="margin-top: 0.3rem;"><strong>Quality: </strong><span id="resHardnessCategory">Perform titration to classify.</span></div>
+              </div>
+
+              <!-- BIS Inference & Compliance Card -->
+              <div class="inference-box" id="inferenceBox" style="display: none;">
+                <div class="inference-title">📋 BIS Drinking Limit (IS 10500:2012)</div>
+                <p class="inference-desc">
+                  <strong>Statement:</strong> The acceptable limit of total hardness in drinking water is <strong>200 mg/L (ppm)</strong>, and the permissible limit in the absence of an alternate source is <strong>600 mg/L (ppm)</strong>.
+                </p>
+                <div class="inference-actions">
+                  <span style="font-weight: 600; font-size: 1rem;">Is this statement:</span>
+                  <label class="inference-radio-label">
+                    <input type="radio" name="bisInference" value="true" /> True
+                  </label>
+                  <label class="inference-radio-label">
+                    <input type="radio" name="bisInference" value="false" /> False
+                  </label>
+                  <button type="button" id="btnSubmitInference" class="btn-calc-check">Submit</button>
+                </div>
+                <div id="inferenceFeedback" class="inference-feedback-msg" style="display: none;"></div>
+                <div id="sampleComplianceBox" class="sample-compliance-box" style="display: none;"></div>
+              </div>
+            </div>
+          </div>
+        </div>
   </div>
 
-  <!-- LAB REPORT MODAL -->
-  <div id="lab-report-modal" style="display: none;">
-    <div class="report-content">
-      <div class="report-header">
-        <img src="./images/logo_nitk.png" alt="logo" class="report-logo" />
-        <div class="report-header-text">
-          <h2>Virtual Chemistry Lab</h2>
-          <h3>National Institute of Technology Karnataka, Surathkal</h3>
-        </div>
-      </div>
-
-      <h1 class="report-title">LABORATORY EXPERIMENT REPORT</h1>
-      <h3 class="report-subtitle">Percentage of Copper in Brass Estimation</h3>
-
-      <div class="report-meta">
-        <p><strong>Date & Time:</strong> <span id="rep_date">-</span></p>
-        <p><strong>Experiment Status:</strong> <span id="rep_status"
-            style="color: #089B93; font-weight: 600;">Completed</span></p>
-      </div>
-
-      <div class="report-section">
-        <h4 class="report-section-title">1. Sample Information</h4>
-        <table class="report-table">
-          <tr>
-            <td style="width: 50%;"><strong>Brass Sample Weight (W)</strong></td>
-            <td><span id="rep_weight">-</span> g</td>
-          </tr>
-        </table>
-      </div>
-
-      <div class="report-section">
-        <h4 class="report-section-title">2. Titration Observation Table</h4>
-        <table class="report-table obs-report-table">
-          <thead>
-            <tr>
-              <th>Trial</th>
-              <th>Initial Reading (mL)</th>
-              <th>Final Reading (mL)</th>
-              <th>Consumed Volume (mL)</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Trial 1</td>
-              <td id="rep_t1_init">-</td>
-              <td id="rep_t1_final">-</td>
-              <td id="rep_t1_diff">-</td>
-            </tr>
-            <tr>
-              <td>Trial 2</td>
-              <td id="rep_t2_init">-</td>
-              <td id="rep_t2_final">-</td>
-              <td id="rep_t2_diff">-</td>
-            </tr>
-            <tr>
-              <td>Trial 3</td>
-              <td id="rep_t3_init">-</td>
-              <td id="rep_t3_final">-</td>
-              <td id="rep_t3_diff">-</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="report-section">
-        <h4 class="report-section-title">3. Final Estimation Results</h4>
-        <table class="report-table">
-          <tr>
-            <td style="width: 50%;"><strong>Concordant Titre Volume ($V_{\text{thio}}$)</strong></td>
-            <td><strong><span id="rep_concordant">-</span> mL</strong></td>
-          </tr>
-          <tr>
-            <td><strong>Normality of Brass Solution ($N_{\text{brass}}$)</strong></td>
-            <td><span id="rep_normality">-</span> N</td>
-          </tr>
-          <tr>
-            <td><strong>Copper Concentration</strong></td>
-            <td><span id="rep_concentration">-</span> g/L</td>
-          </tr>
-          <tr>
-            <td><strong>Percentage of Copper in Brass ($P_{\text{Cu}}$)</strong></td>
-            <td><strong><span id="rep_percentage">-</span> %</strong></td>
-          </tr>
-        </table>
-      </div>
-
-      <div class="report-actions">
-        <button class="ctrl-btn print-btn" onclick="window.print()"
-          style="background-color: #089B93; color: white; display: inline-flex; align-items: center; gap: 6px; padding: 10px 16px; border: none; border-radius: 4px; font-weight: 600; cursor: pointer;">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5"
-            stroke="currentColor" style="width: 18px; height: 18px;">
-            <path stroke-linecap="round" stroke-linejoin="round"
-              d="M6.72 13.82l-.24 3h11.04l-.24-3m-10.56 0a3 3 0 116.0 0m-6.0 0h6.0m0 0a3 3 0 11-6.0 0m-3.0 3h15.0m-16.5-6h18.0A1.5 1.5 0 0021.0 9.0V5.25A1.5 1.5 0 0019.5 3.75h-15.0A1.5 1.5 0 003.0 5.25V9.0A1.5 1.5 0 004.5 10.5z" />
-          </svg>
-          <span>Print / Save as PDF</span>
-        </button>
-        <button class="ctrl-btn close-btn" onclick="closeReportModal()"
-          style="background-color: #757777; color: white; padding: 10px 16px; border: none; border-radius: 4px; font-weight: 600; cursor: pointer; margin-left: 10px;">
-          <span>Close</span>
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- MOBILE CONTROLS DRAWER -->
-  <div id="mobile-controls-drawer" class="mobile-drawer">
-    <div class="drawer-header">
-      <h3>Controls</h3>
-      <button class="close-drawer-btn" onclick="toggleMobileDrawer()">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"
-          style="width: 20px; height: 20px;">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+  <footer class="footer">
+    <div class="footer-menus">
+      <button class="ctrl-btn sim-btn" onclick="scrollToSimulation()">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="#089B93" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffffff" class="icon">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3 8.25V18a2.25 2.25 0 002.25 2.25h13.5A2.25 2.25 0 0021 18V8.25m-18 0V6a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 6v2.25m-18 0h18M5.25 6h.008v.008H5.25V6zM7.5 6h.008v.008H7.5V6zm2.25 0h.008v.008H9.75V6z" />
         </svg>
+        <span>Simulation</span>
+      </button>
+
+      <button class="ctrl-btn result-btn" onclick="scrollToTable()">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#ffffff" stroke="#089B93" class="icon">
+          <path fill-rule="evenodd" d="M2.625 6.75a1.125 1.125 0 1 1 2.25 0 1.125 1.125 0 0 1-2.25 0Zm4.875 0A.75.75 0 0 1 8.25 6h12a.75.75 0 0 1 0 1.5h-12a.75.75 0 0 1-.75-.75ZM2.625 12a1.125 1.125 0 1 1 2.25 0 1.125 1.125 0 0 1-2.25 0ZM7.5 12a.75.75 0 0 1 .75-.75h12a.75.75 0 0 1 0 1.5h-12A.75.75 0 0 1 7.5 12Zm-4.875 5.25a1.125 1.125 0 1 1 2.25 0 1.125 1.125 0 0 1-2.25 0Zm4.875 0a.75.75 0 0 1 .75-.75h12a.75.75 0 0 1 0 1.5h-12a.75.75 0 0 1-.75-.75Z" clip-rule="evenodd" stroke-width="1" />
+        </svg>
+        <span>Result</span>
+      </button>
+
+      <button class="ctrl-btn variables-btn" onclick="scrollToVariables()">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#ffffff" stroke="#089B93" class="icon">
+          <path fill-rule="evenodd" d="M19.253 2.292a.75.75 0 0 1 .955.461A28.123 28.123 0 0 1 21.75 12c0 3.266-.547 6.388-1.542 9.247a.75.75 0 1 1-1.416-.494c.94-2.7 1.458-5.654 1.458-8.753s-.519-6.054-1.458-8.754a.75.75 0 0 1 .461-.954Zm-14.227.013a.75.75 0 0 1 .414.976A23.183 23.183 0 0 0 3.75 12c0 3.085.6 6.027 1.69 8.718a.75.75 0 0 1-1.39.563c-1.161-2.867-1.8-6-1.8-9.281 0-3.28.639-6.414 1.8-9.281a.75.75 0 0 1 .976-.414Z" clip-rule="evenodd" stroke-width="1" />
+        </svg>
+        <span>Variables</span>
       </button>
     </div>
-    <div class="drawer-body">
-      <div class="drawer-controls-grid">
-        <!-- Start / Reset -->
-        <button class="ctrl-btn start-btn" onclick="startSim(); toggleMobileDrawer();"
-          style="font-size: 1.1rem; padding: 0.5rem; color: white; background: #089B93;">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#ffffff" stroke="#089B93"
-            class="icon" style="width: 20px; height: 20px; margin-right: 4px;">
-            <path fill-rule="evenodd"
-              d="M4.5 5.653c0-1.427 1.529-2.33 2.779-1.643l11.54 6.347c1.295.712 1.295 2.573 0 3.286L7.28 19.99c-1.25.687-2.779-.217-2.779-1.643V5.653Z"
-              clip-rule="evenodd" />
-          </svg>
-          <span>Start Trial 1</span>
-        </button>
-        <button class="ctrl-btn reset-btn" onclick="resetSim(); toggleMobileDrawer();"
-          style="font-size: 1.1rem; padding: 0.5rem; color: white; background: #757777;">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#ffffff" class="icon"
-            stroke-width="2" style="width: 20px; height: 20px; margin-right: 4px;">
-            <path stroke-linecap="round" stroke-linejoin="round"
-              d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
-          </svg>
-          <span>Reset</span>
-        </button>
-
-        <!-- Prev / Next -->
-        <button class="ctrl-btn prev-btn" onclick="prevStep(); toggleMobileDrawer();"
-          style="font-size: 1.1rem; padding: 0.5rem;">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#089B93" class="icon"
-            stroke-width="2" style="width: 20px; height: 20px; margin-right: 4px;">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
-          </svg>
-          <span>Prev Step</span>
-        </button>
-        <button class="ctrl-btn next-btn" onclick="nextStep(); toggleMobileDrawer();"
-          style="font-size: 1.1rem; padding: 0.5rem;">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#089B93" class="icon"
-            stroke-width="2" style="width: 20px; height: 20px; margin-right: 4px;">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-          </svg>
-          <span>Next Step</span>
-        </button>
-
-        <!-- Play / Pause -->
-        <button class="ctrl-btn play-btn" onclick="playSim(); toggleMobileDrawer();"
-          style="font-size: 1.1rem; padding: 0.5rem;">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#089B93" stroke="#ffffff"
-            class="icon" style="width: 20px; height: 20px; margin-right: 4px;">
-            <path fill-rule="evenodd"
-              d="M4.5 5.653c0-1.427 1.529-2.33 2.779-1.643l11.54 6.347c1.295.712 1.295 2.573 0 3.286L7.28 19.99c-1.25.687-2.779-.217-2.779-1.643V5.653Z"
-              clip-rule="evenodd" />
-          </svg>
-          <span>Play</span>
-        </button>
-        <button class="ctrl-btn pause-btn" onclick="pauseSim(); toggleMobileDrawer();"
-          style="font-size: 1.1rem; padding: 0.5rem;">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#089B93" stroke="#ffffff"
-            class="icon" style="width: 20px; height: 20px; margin-right: 4px;">
-            <path fill-rule="evenodd"
-              d="M6.75 5.25a.75.75 0 0 1 .75-.75H9a.75.75 0 0 1 .75.75v13.5a.75.75 0 0 1-.75.75H7.5a.75.75 0 0 1-.75-.75V5.25Zm7.5 0A.75.75 0 0 1 15 4.5h1.5a.75.75 0 0 1 .75.75v13.5a.75.75 0 0 1-.75.75H15a.75.75 0 0 1-.75-.75V5.25Z"
-              clip-rule="evenodd" />
-          </svg>
-          <span>Pause</span>
-        </button>
-
-        <!-- Rotate -->
-        <button class="ctrl-btn rotate-btn" onclick="toggleRotate(); toggleMobileDrawer();"
-          style="grid-column: span 2; font-size: 1.1rem; padding: 0.5rem;">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#089B93" class="icon"
-            stroke-width="2" style="width: 20px; height: 20px; margin-right: 4px;">
-            <path stroke-linecap="round" stroke-linejoin="round"
-              d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7" />
-          </svg>
-          <span>Rotate</span>
-        </button>
-      </div>
-    </div>
+    <p class="footer-copy">© Copyright @ SOLVE - The Virtual Lab @ NITK</p>
+  </footer>
   </div>
-</body>
 
+  <script>
+    function scrollToSimulation() {
+      if (window.innerWidth <= 1050) {
+        document.querySelector(".simulation")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+    function scrollToTable() {
+      if (window.innerWidth <= 1050) {
+        document.querySelector(".table")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+    function scrollToVariables() {
+      if (window.innerWidth <= 1050) {
+        document.querySelector(".var-controls")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+  </script>
+</body>
 </html>

@@ -1,0 +1,92 @@
+{
+  "experimentId": "edta-water-hardness",
+  "title": "Determination of Hardness of Water Using EDTA Titration",
+  "subtitle": "Complexometric Titration with Eriochrome Black T (EBT) Indicator",
+  "reference": "NITK Surathkal / IS 3025 (Part 21) - 2009",
+  "defaults": {
+    "edtaDisodiumSalt": {
+      "name": "Disodium EDTA Dihydrate (Na2H2Y·2H2O)",
+      "molarMass": 372.24,
+      "defaultMassG": 0.930,
+      "volumetricFlaskCapacityML": 250.0,
+      "nominalMolarity": 0.010
+    },
+    "waterSample": {
+      "defaultVolumeML": 25.0,
+      "presetHardness": 240.0,
+      "presets": [
+        { "id": "soft", "label": "Sample A (Soft Water ~75 ppm)", "hardness": 75.0 },
+        { "id": "moderate", "label": "Sample B (Moderately Hard ~160 ppm)", "hardness": 160.0 },
+        { "id": "hard", "label": "Sample C (Hard Tap Water ~240 ppm)", "hardness": 240.0 },
+        { "id": "veryHard", "label": "Sample D (Groundwater/Borewell ~450 ppm)", "hardness": 450.0 }
+      ]
+    },
+    "buffer": {
+      "name": "Ammonia-Ammonium Chloride Buffer (NH3-NH4Cl)",
+      "pH": 10.0,
+      "defaultVolumeML": 3.0
+    },
+    "indicator": {
+      "name": "Eriochrome Black T (EBT)",
+      "amount": "Pinch",
+      "colorInitial": "#990033",
+      "colorInitialName": "Wine Red",
+      "colorTransition": "#7A288A",
+      "colorTransitionName": "Purple / Violet",
+      "colorEndpoint": "#0284c7",
+      "colorEndpointName": "Clear Blue"
+    },
+    "titration": {
+      "concordanceToleranceML": 0.1,
+      "flowRates": {
+        "slow": 0.2,
+        "medium": 0.6,
+        "fast": 1.5,
+        "dropwise": 0.1
+      }
+    }
+  },
+  "bisStandards": {
+    "desirableLimit": 200.0,
+    "permissibleLimit": 600.0,
+    "unit": "ppm of CaCO3",
+    "classification": [
+      { "max": 75, "label": "Soft" },
+      { "min": 75, "max": 150, "label": "Moderately Hard" },
+      { "min": 150, "max": 300, "label": "Hard" },
+      { "min": 300, "label": "Very Hard" }
+    ]
+  },
+  "phases": [
+    {
+      "id": "phase1",
+      "name": "Phase 1: Preparation of Standard EDTA Solution",
+      "objective": "Weigh disodium salt of EDTA accurately, transfer to a 250 mL volumetric flask, dissolve and make up to the mark with ion-exchange water to calculate exact EDTA molarity.",
+      "steps": [
+        { "step": 1, "id": "weigh_edta_bottle", "title": "Weigh Bottle + EDTA Salt", "instruction": "Weigh the weighing bottle containing EDTA disodium salt on the electronic balance and record W1 (g)." },
+        { "step": 2, "id": "transfer_edta", "title": "Transfer EDTA Salt", "instruction": "Carefully transfer the EDTA crystals through the funnel into the 250 mL volumetric flask." },
+        { "step": 3, "id": "reweigh_empty_bottle", "title": "Reweigh Empty Bottle", "instruction": "Reweigh the empty bottle on the balance to record W2 (g) and determine transferred mass W = W1 - W2." },
+        { "step": 4, "id": "wash_funnel", "title": "Wash Funnel with Water", "instruction": "Pour ion-exchange water through the funnel to wash all EDTA crystals into the flask, then remove funnel." },
+        { "step": 5, "id": "dissolve_edta", "title": "Dissolve EDTA Crystals", "instruction": "Swirl the volumetric flask gently to dissolve the EDTA crystals completely in ion-exchange water." },
+        { "step": 6, "id": "make_up_mark", "title": "Make Up to 250 mL Mark", "instruction": "Add ion-exchange water until the lower meniscus reaches the 250 mL graduation mark on the neck." },
+        { "step": 7, "id": "stopper_and_mix", "title": "Stopper & Mix by Inversion", "instruction": "Stopper the volumetric flask and invert several times to obtain a completely homogeneous standard solution." },
+        { "step": 8, "id": "calculate_molarity", "title": "Calculate EDTA Molarity", "instruction": "Calculate standard EDTA molarity: M = (Weight of EDTA × 4) / 372.24." }
+      ]
+    },
+    {
+      "id": "phase2",
+      "name": "Phase 2: Determination of Total Hardness",
+      "objective": "Titrate 25 mL of water sample against prepared standard EDTA solution using NH3-NH4Cl buffer and pinch of EBT indicator to determine total hardness in ppm of CaCO3.",
+      "steps": [
+        { "step": 1, "id": "fill_burette", "title": "Fill Burette with EDTA", "instruction": "Fill the burette with the prepared standard EDTA solution up to the 0.00 mL mark." },
+        { "step": 2, "id": "pipette_sample", "title": "Pipette 25 mL Water Sample", "instruction": "Pipette exactly 25.0 mL of the given water sample into a clean 250 mL conical flask." },
+        { "step": 3, "id": "add_buffer", "title": "Add 3 mL NH3-NH4Cl Buffer", "instruction": "Add 3.0 mL of NH3-NH4Cl buffer solution to maintain the pH at 10 for complexation." },
+        { "step": 4, "id": "add_indicator", "title": "Add Pinch of EBT", "instruction": "Add a pinch of Eriochrome Black-T indicator. The solution turns wine-red due to metal-indicator complex." },
+        { "step": 5, "id": "place_flask", "title": "Place Conical Flask", "instruction": "Place the conical flask on the white porcelain contrast tile beneath the burette tip." },
+        { "step": 6, "id": "titrate_sample", "title": "Titrate with EDTA", "instruction": "Open the stopcock to titrate with EDTA. Swirl continuously until the solution changes from wine red to clear blue." },
+        { "step": 7, "id": "record_reading", "title": "Record Burette Reading", "instruction": "Close stopcock and record reading. Repeat trials to obtain an agreeable/concordant burette reading." },
+        { "step": 8, "id": "calculate_hardness", "title": "Calculate Total Hardness", "instruction": "Calculate total hardness in ppm of CaCO3 using (MV)Hard Water = (MV)EDTA." }
+      ]
+    }
+  ]
+}

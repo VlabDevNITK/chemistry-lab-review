@@ -1,28 +1,27 @@
+/* Hide bottom navigation menu by default on all desktop screens (> 1050px) */
+.footer-menus {
+  display: none !important;
+}
+
 @media (max-width: 1550px) {
  
 .main{
   grid-template-columns:70% 30%;
   padding: 0 0.25rem;
 }
-/* Hide menus by default (desktop) */
-.footer-menus {
-  background: none;
-  display: none;
-}
 
 .table{
     margin-right: 0.5rem;
 }
 
-
 }
-@media (max-width: 980px) {
+@media (max-width: 1050px) {
   .logo{
-    width: 5.8rem;
-    height: 5.8rem;
+    width:5rem;
+    height:5rem;
   }
   .title h1{
-    font-size: 2.0rem;
+    font-size:1.8rem;
   }
  
   .section-title{
@@ -110,11 +109,11 @@
 
 @media (max-width: 768px) {
   .logo{
-    width: 4.8rem;
-    height: 4.8rem;
+    width:3rem;
+    height:3rem;
   }
   .title h1{
-    font-size: 1.6rem;
+    font-size:1.4rem;
   }
   .section-title{
     font-size:1.4rem;

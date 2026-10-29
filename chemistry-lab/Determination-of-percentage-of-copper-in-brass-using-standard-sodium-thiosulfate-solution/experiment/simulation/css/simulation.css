@@ -1,0 +1,990 @@
+/* ==========================================================================
+   Determination of Hardness of Water - Simulation Styles
+   Scoped specifically to simulation widgets without modifying template layout
+   ========================================================================== */
+
+/* Three.js Simulation Viewport inside .section-canvas */
+.task-section--simulation {
+  display: flex !important;
+  flex-direction: column !important;
+  width: 100% !important;
+  padding: 0.5rem !important;
+  margin-bottom: 0 !important;
+  box-sizing: border-box !important;
+}
+
+.section-canvas {
+  width: 100% !important;
+  max-width: 100% !important;
+  justify-self: stretch !important;
+  position: relative !important;
+  box-sizing: border-box !important;
+}
+
+.simscreen-wrapper {
+  position: relative !important;
+  width: 100% !important;
+  height: 520px !important;
+  background: #e2e8f0 !important;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.08);
+  box-sizing: border-box !important;
+}
+
+#simCanvas {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  display: block !important;
+  z-index: 1 !important;
+}
+
+/* Step Guidance Banner Overlay at top of canvas */
+.sim-step-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(10, 54, 60, 0.94);
+  backdrop-filter: blur(4px);
+  color: #ffffff;
+  padding: 0.5rem 0.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  z-index: 20;
+  border-bottom: 2px solid var(--clr-title-background2);
+}
+
+.sim-step-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.sim-phase-badge {
+  background: var(--clr-title-background2);
+  color: #0a363c;
+  padding: 0.15rem 0.5rem;
+  border-radius: 0.8rem;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.sim-step-badge {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 0.15rem 0.5rem;
+  border-radius: 0.8rem;
+  font-size: 1rem;
+}
+
+.sim-step-instruction {
+  font-size: 1.25rem;
+  line-height: 1.6rem;
+  color: #f0fdf4;
+  margin: 0;
+  font-weight: 500;
+}
+
+.sim-step-feedback {
+  font-size: 1.15rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  display: none;
+}
+
+.sim-step-feedback.show {
+  display: block;
+}
+
+.sim-step-feedback.info {
+  background: rgba(14, 165, 233, 0.25);
+  color: #bae6fd;
+  border-left: 3px solid #38bdf8;
+}
+
+.sim-step-feedback.success {
+  background: rgba(34, 197, 94, 0.25);
+  color: #bbf7d0;
+  border-left: 3px solid #4ade80;
+}
+
+.sim-step-feedback.warn {
+  background: rgba(234, 179, 8, 0.25);
+  color: #fef08a;
+  border-left: 3px solid #facc15;
+}
+
+/* Eye-Level Meniscus Magnifier Lens Overlay */
+.meniscus-magnifier {
+  position: absolute;
+  top: 58px;
+  right: 10px;
+  width: 120px;
+  height: 110px;
+  background: #ffffff;
+  border: 2px solid var(--clr-title-background2);
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 4px;
+  z-index: 15;
+  display: flex;
+  flex-direction: column;
+  pointer-events: none;
+}
+
+.meniscus-magnifier-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-align: center;
+  color: #0f766e;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 2px;
+  margin-bottom: 2px;
+}
+
+.meniscus-canvas-box {
+  position: relative;
+  flex: 1;
+  width: 100%;
+  border-radius: 3px;
+  background: #f8fafc;
+  overflow: hidden;
+}
+
+#meniscusCanvas {
+  width: 100%;
+  height: 100%;
+}
+
+.meniscus-reading-label {
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-align: center;
+  color: #0f172a;
+  background: #f1f5f9;
+  border-radius: 3px;
+  margin-top: 2px;
+  font-family: monospace;
+}
+
+/* Live HUD in Canvas */
+.sim-hud {
+  position: absolute;
+  bottom: 0.6rem;
+  left: 0.6rem;
+  right: 0.6rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  pointer-events: none;
+  z-index: 10;
+  gap: 0.4rem;
+}
+
+.sim-hud-card {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(8, 155, 147, 0.3);
+  border-radius: 0.35rem;
+  padding: 0.3rem 0.5rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  pointer-events: auto;
+  font-size: 1rem;
+  color: #1e293b;
+}
+
+.sim-hud-title {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  color: #64748b;
+  font-weight: 700;
+}
+
+.sim-hud-value {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--primary-color);
+  font-family: monospace;
+}
+
+.stopcock-status-badge {
+  display: inline-block;
+  font-weight: 700;
+  padding: 0.15rem 0.4rem;
+  border-radius: 0.25rem;
+  font-size: 1.05rem;
+}
+
+.stopcock-status-badge.closed {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.stopcock-status-badge.open {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+/* Controls Buttons Grid inside .desktop-controls */
+.desktop-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  padding: 0.8rem;
+  width: 100%;
+}
+
+.controls-actions-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.controls-actions-grid .ctrl-btn {
+  font-size: 1.15rem;
+  padding: 0.5rem 0.3rem;
+  border-radius: 0.3rem;
+  font-weight: 600;
+  background: #f8fafc;
+  color: #0f766e;
+  border: 1.5px solid #089b93;
+  transition: all 0.2s ease;
+  min-height: 3.6rem;
+}
+
+.controls-actions-grid .ctrl-btn:not(:disabled):hover {
+  background: #089b93;
+  color: #ffffff;
+}
+
+.controls-actions-grid .ctrl-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  border-color: #cbd5e1;
+  color: #94a3b8;
+  background: #f1f5f9;
+}
+
+.controls-actions-grid .ctrl-btn.active-action {
+  background: linear-gradient(135deg, #089b93, #0284c7);
+  color: #ffffff;
+  border-color: #0369a1;
+  animation: glow-pulse 1.5s infinite alternate;
+}
+
+@keyframes glow-pulse {
+  from {
+    box-shadow: 0 0 3px rgba(8, 155, 147, 0.4);
+  }
+
+  to {
+    box-shadow: 0 0 10px rgba(8, 155, 147, 0.8);
+  }
+}
+
+.controls-full-btn {
+  grid-column: 1 / -1;
+}
+
+/* Bottom Navigation Menu: Hidden on desktop screens (>1050px), visible only on <= 1050px */
+.footer-menus {
+  display: none !important;
+}
+
+/* Results & Observations styling inside .table */
+.table {
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important;
+  max-height: calc(100vh - 6rem) !important;
+  min-height: 520px;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+}
+
+.table .section-title {
+  flex-shrink: 0 !important;
+  margin-bottom: 0.25rem !important;
+}
+
+.results-tab-bar {
+  display: flex !important;
+  gap: 0.35rem !important;
+  padding: 0 0.5rem !important;
+  margin-bottom: 0.4rem !important;
+  flex-shrink: 0 !important;
+}
+
+.results-tab-btn {
+  flex: 1;
+  padding: 0.4rem 0.2rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+  border: 1.5px solid #089b93;
+  background: #f8fafc;
+  color: #0f766e;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.results-tab-btn.active {
+  background: #089b93;
+  color: #ffffff;
+}
+
+.results-tab-btn:hover:not(.active) {
+  background: #e6fffa;
+}
+
+.results-section {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: flex-start !important;
+  align-items: stretch !important;
+  gap: 0.8rem !important;
+  padding: 0.4rem 0.6rem !important;
+  flex: 1 1 auto !important;
+  height: 0 !important; /* Critical: forces flex child to scroll within remaining vertical height */
+  min-height: 0 !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  box-sizing: border-box !important;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Custom scrollbar for results section */
+.results-section::-webkit-scrollbar {
+  width: 6px;
+}
+.results-section::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 4px;
+}
+.results-section::-webkit-scrollbar-thumb {
+  background: #0d9488;
+  border-radius: 4px;
+}
+.results-section::-webkit-scrollbar-thumb:hover {
+  background: #0f766e;
+}
+
+/* Data Table containers inside results section: NEVER center vertically, NEVER constrain height */
+#datatable1,
+.task-section--table {
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+  min-height: auto !important;
+  max-height: none !important;
+  overflow-x: auto !important;
+  overflow-y: visible !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  box-sizing: border-box !important;
+}
+
+.obs-table-container {
+  display: block !important;
+  width: 100% !important;
+  margin: 0 0 0.8rem 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+}
+
+.obs-table-container h4 {
+  margin: 0 0 0.5rem 0 !important;
+  padding: 0.2rem 0 !important;
+  font-size: 1.2rem !important;
+  line-height: 1.4rem !important;
+  font-weight: 700 !important;
+  color: #0a363c !important;
+  text-align: left !important;
+}
+
+.task-section--results {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0.8rem !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  height: auto !important;
+  min-height: auto !important;
+  max-height: none !important;
+  overflow: visible !important;
+}
+
+.exp-data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 1.1rem;
+  background: #ffffff;
+}
+
+.exp-data-table th {
+  background: #089b93;
+  color: #ffffff;
+  font-weight: 600;
+  padding: 0.4rem 0.3rem;
+  text-align: center;
+  border: 1px solid #417472;
+  font-size: 1rem;
+}
+
+.exp-data-table td {
+  padding: 0.35rem 0.3rem;
+  text-align: center;
+  border: 1px solid #cbd5e1;
+  font-size: 1.05rem;
+}
+
+.exp-data-table tr.concordant-row {
+  background-color: #ecfdf5 !important;
+  font-weight: 700;
+  color: #065f46;
+}
+
+.trial-badge {
+  display: inline-block;
+  padding: 0.1rem 0.35rem;
+  border-radius: 0.6rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.trial-badge.rough {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.trial-badge.accurate {
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+.trial-badge.concordant {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.trial-badge.overshot {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+/* Calculation Cards inside .task-section--results */
+.calc-card {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-left: 3px solid #089b93;
+  border-radius: 0.3rem;
+  padding: 0.6rem;
+  margin-bottom: 0.6rem;
+  font-size: 1.15rem;
+}
+
+.calc-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #0a363c;
+  margin-bottom: 0.3rem;
+}
+
+.calc-formula-box {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 0.25rem;
+  padding: 0.4rem 0.5rem;
+  font-family: monospace;
+  font-size: 1rem;
+  line-height: 1.4rem;
+  margin-bottom: 0.4rem;
+  color: #0f172a;
+}
+
+.calc-input-group {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.calc-input {
+  width: 75px;
+  padding: 0.25rem 0.4rem;
+  font-size: 1.15rem;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 0.25rem;
+  font-family: monospace;
+}
+
+.calc-input.correct {
+  border-color: #16a34a;
+  background-color: #f0fdf4;
+}
+
+.calc-input.incorrect {
+  border-color: #dc2626;
+  background-color: #fef2f2;
+}
+
+.btn-calc-check {
+  padding: 0.3rem 0.6rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  background: #089b93;
+  color: #ffffff;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.btn-calc-check:hover {
+  background: #0f766e;
+}
+
+.btn-calc-steps {
+  padding: 0.3rem 0.5rem;
+  font-size: 1rem;
+  background: #f1f5f9;
+  color: #475569;
+  border: 1px solid #cbd5e1;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+
+.calc-steps-content {
+  display: none;
+  margin-top: 0.4rem;
+  padding: 0.5rem;
+  background: #f0fdfa;
+  border: 1px dashed #089b93;
+  border-radius: 0.25rem;
+  font-size: 1.05rem;
+  line-height: 1.5rem;
+}
+
+.calc-steps-content.show {
+  display: block;
+}
+
+/* Results Metric Summary Box */
+.results-summary-box {
+  background: linear-gradient(135deg, #0a363c, #134e4a);
+  color: #ffffff;
+  border-radius: 0.4rem;
+  padding: 0.6rem;
+  margin-bottom: 0.6rem;
+  font-size: 1.15rem;
+}
+
+.results-summary-box strong {
+  color: #99f6e4;
+}
+
+.res-val-highlight {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ffffff;
+  font-family: monospace;
+}
+
+/* BIS Inference Box */
+.inference-box {
+  background: #fefce8;
+  border: 1.5px solid #fde047;
+  border-radius: 0.4rem;
+  padding: 0.6rem;
+  font-size: 1.05rem;
+  line-height: 1.45rem;
+  color: #713f12;
+  box-sizing: border-box;
+}
+
+.inference-title {
+  font-weight: 700;
+  color: #854d0e;
+  font-size: 1.15rem;
+  margin-bottom: 0.25rem;
+}
+
+.inference-desc {
+  margin: 0.2rem 0 0.5rem 0;
+  font-size: 1.05rem;
+}
+
+.inference-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin: 0.4rem 0;
+}
+
+.inference-radio-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.inference-feedback-msg {
+  margin-top: 0.4rem;
+  padding: 0.4rem 0.6rem;
+  border-radius: 0.25rem;
+  font-size: 1.05rem;
+  line-height: 1.4rem;
+}
+
+.sample-compliance-box {
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 0.3rem;
+  font-size: 1.05rem;
+  line-height: 1.4rem;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+}
+
+/* ==========================================================================
+   Responsive Overrides - Ensures full functionality on mobile and tablets
+   ========================================================================== */
+@media (max-width: 1550px) {
+  .main {
+    grid-template-columns: 72% 28%;
+  }
+}
+
+@media (max-width: 1050px) {
+  .main {
+    grid-template-columns: 1fr !important;
+    gap: 1rem;
+  }
+
+  .controls {
+    display: block !important;
+  }
+
+  .simulation-main {
+    grid-template-columns: 1fr !important;
+  }
+
+  .var-controls {
+    grid-row: auto !important;
+    grid-column: 1 / -1 !important;
+  }
+
+  .table {
+    grid-row: auto !important;
+    grid-column: 1 / -1 !important;
+    max-height: none !important;
+    height: auto !important;
+    overflow: visible !important;
+    margin-bottom: 6rem;
+  }
+
+  .results-section {
+    max-height: 600px;
+  }
+
+  .simscreen-wrapper {
+    height: 500px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  /* ==========================================================
+   MOBILE HUD
+   All four cards have identical width AND height
+   ========================================================== */
+
+  .sim-hud {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0.2rem;
+
+    left: 0.35rem;
+    right: 0.35rem;
+    bottom: 0.3rem;
+  }
+
+  .sim-hud-card {
+    width: 100%;
+    height: 3rem;
+
+    min-width: 0;
+
+    padding: 0.1rem 0.15rem;
+
+    border-radius: 0.25rem;
+  }
+
+  /* Short mobile labels */
+  .sim-hud-title {
+    width: 100%;
+    height: 0.75rem;
+
+    font-size: 0;
+    line-height: 0.75rem;
+  }
+
+  /* BURET */
+  .sim-hud-card:nth-child(1) .sim-hud-title::after {
+    content: "BURET";
+    font-size: 0.65rem;
+    line-height: 0.75rem;
+  }
+
+  /* TITRE */
+  .sim-hud-card:nth-child(2) .sim-hud-title::after {
+    content: "TITRE";
+    font-size: 0.65rem;
+    line-height: 0.75rem;
+  }
+
+  /* TAP */
+  .sim-hud-card:nth-child(3) .sim-hud-title::after {
+    content: "TAP";
+    font-size: 0.65rem;
+    line-height: 0.75rem;
+  }
+
+  /* COLOR */
+  .sim-hud-card:nth-child(4) .sim-hud-title::after {
+    content: "COLOR";
+    font-size: 0.65rem;
+    line-height: 0.75rem;
+  }
+
+  /* Numeric / text values */
+  .sim-hud-value {
+    width: 100%;
+    height: 1.15rem;
+
+    font-size: 0.82rem;
+    line-height: 1.15rem;
+  }
+
+  /* TAP / CLOSED */
+  .stopcock-status-badge {
+    width: 100%;
+    height: 1.15rem;
+
+    margin: 0;
+
+    padding: 0.05rem 0.1rem;
+
+    font-size: 0.68rem;
+    line-height: 1rem;
+  }
+
+  .controls-actions-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.4rem;
+  }
+
+  .controls-actions-grid .ctrl-btn {
+    font-size: 1rem;
+    min-height: 3.2rem;
+    padding: 0.4rem 0.2rem;
+  }
+
+  .table {
+    margin-bottom: 7rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+
+  .meniscus-magnifier {
+    width: 90px;
+    height: 84px;
+    top: 98px;
+    right: 6px;
+  }
+
+  /* Keep all four HUD cards exactly equal */
+  /* ==========================================================
+   VERY SMALL MOBILE SCREENS
+   ========================================================== */
+
+  /* ==========================================================
+   VERY SMALL MOBILE HUD
+   Compact + vertically aligned + equal card sizes
+   ========================================================== */
+
+  .sim-hud {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+
+    gap: 0.12rem !important;
+
+    left: 0.25rem !important;
+    right: 0.25rem !important;
+    bottom: 0.25rem !important;
+
+    align-items: stretch !important;
+  }
+
+  /* ----------------------------------------------------------
+   All four cards
+   ---------------------------------------------------------- */
+
+  .sim-hud-card {
+    width: 100% !important;
+    height: 2.7rem !important;
+
+    min-width: 0 !important;
+    max-width: none !important;
+
+    box-sizing: border-box !important;
+
+    padding: 0.08rem 0.05rem !important;
+
+    display: grid !important;
+
+    /*
+     First row = label
+     Second row = value
+  */
+    grid-template-rows: 0.65rem 1rem !important;
+
+    align-content: center !important;
+    justify-items: center !important;
+
+    gap: 0.04rem !important;
+
+    border-radius: 0.2rem !important;
+
+    overflow: hidden !important;
+
+    text-align: center !important;
+  }
+
+  /* ----------------------------------------------------------
+   Labels
+   ---------------------------------------------------------- */
+
+  .sim-hud-title {
+    width: 100% !important;
+    height: 0.65rem !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    font-size: 0 !important;
+    line-height: 0.65rem !important;
+
+    white-space: nowrap !important;
+    overflow: hidden !important;
+  }
+
+  /* BURET */
+  .sim-hud-card:nth-child(1) .sim-hud-title::after {
+    content: "BURET";
+
+    font-size: 0.58rem;
+    line-height: 0.65rem;
+  }
+
+  /* TITRE */
+  .sim-hud-card:nth-child(2) .sim-hud-title::after {
+    content: "TITRE";
+
+    font-size: 0.58rem;
+    line-height: 0.65rem;
+  }
+
+  /* TAP */
+  .sim-hud-card:nth-child(3) .sim-hud-title::after {
+    content: "TAP";
+
+    font-size: 0.58rem;
+    line-height: 0.65rem;
+  }
+
+  /* COLOR */
+  .sim-hud-card:nth-child(4) .sim-hud-title::after {
+    content: "COLOR";
+
+    font-size: 0.58rem;
+    line-height: 0.65rem;
+  }
+
+  /* ----------------------------------------------------------
+   Normal values
+   ---------------------------------------------------------- */
+
+  .sim-hud-value {
+    display: flex !important;
+
+    align-items: center !important;
+    justify-content: center !important;
+
+    width: 100% !important;
+    height: 1rem !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    box-sizing: border-box !important;
+
+    font-size: 0.72rem !important;
+    line-height: 1rem !important;
+
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+
+    text-align: center !important;
+  }
+
+  /* ----------------------------------------------------------
+   COLOR value
+   Overrides the inline style="font-size: 1.1rem;"
+   ---------------------------------------------------------- */
+
+  .sim-hud-card:nth-child(4) .sim-hud-value {
+    font-size: 0.68rem !important;
+    line-height: 1rem !important;
+  }
+
+  /* ----------------------------------------------------------
+   TAP / CLOSED badge
+   ---------------------------------------------------------- */
+
+  .stopcock-status-badge {
+    display: flex !important;
+
+    align-items: center !important;
+    justify-content: center !important;
+
+    width: 100% !important;
+    height: 1rem !important;
+
+    margin: 0 !important;
+    padding: 0 !important;
+
+    box-sizing: border-box !important;
+
+    font-size: 0.58rem !important;
+    line-height: 1rem !important;
+
+    text-align: center !important;
+
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
