@@ -483,8 +483,7 @@ async function loadExperimentByPath(path) {
     // write code for active tab file open on experiment switch as all switch working fine except json
     // loadFromGitHub(BASE_URL + (activeTab || "aim.md"));
     switchTab({ target: document.querySelector(".tab.active") }, activeTab || "aim.md");
-    document.querySelector(".preview-title").innerText = experiment.title || "Determination of Hardness of Water Using EDTA Titration"
-";
+    document.querySelector(".preview-title").innerText = experiment.title || "Determination of Hardness of Water Using EDTA Titration";
   } else {
     console.error("Experiment not found for path:", path);
   }
